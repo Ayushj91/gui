@@ -40,6 +40,8 @@ import addExtensionIcon from './icon--extensions.svg';
 import codeIcon from './icon--code.svg';
 import costumesIcon from './icon--costumes.svg';
 import soundsIcon from './icon--sounds.svg';
+import pythonIcon from './icon--python.svg';
+import PythonIDE from '../../containers/Python_IDE/main.jsx';
 
 const messages = defineMessages({
     addExtension: {
@@ -102,6 +104,7 @@ const GUIComponent = props => {
         onToggleLoginOpen,
         onActivateCostumesTab,
         onActivateSoundsTab,
+        onActivePythonTab,
         onActivateTab,
         onClickLogo,
         onExtensionButtonClick,
@@ -118,12 +121,14 @@ const GUIComponent = props => {
         onTelemetryModalOptOut,
         showComingSoon,
         soundsTabVisible,
+        pythonTabVisible,
         stageSizeMode,
         targetIsStage,
         telemetryModalVisible,
         theme,
         tipsLibraryVisible,
         vm,
+
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -303,6 +308,18 @@ const GUIComponent = props => {
                                             id="gui.gui.soundsTab"
                                         />
                                     </Tab>
+                                    <Tab className={tabClassNames.tab}
+                                        onClick={onActivePythonTab}>
+                                        <img
+                                            draggable={false}
+                                            src={pythonIcon}
+                                        />
+                                        <FormattedMessage
+                                            defaultMessage="Python"
+                                            description="Button to get to the python panel"
+                                            id="gui.gui.pythonTab"
+                                        />
+                                    </Tab>
                                 </TabList>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     <Box className={styles.blocksWrapper}>
@@ -341,6 +358,9 @@ const GUIComponent = props => {
                                 </TabPanel>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     {soundsTabVisible ? <SoundTab vm={vm} /> : null}
+                                </TabPanel>
+                                <TabPanel className={tabClassNames.tabPanel}>
+                                    {pythonTabVisible ? <PythonIDE vm={vm} /> : null}
                                 </TabPanel>
                             </Tabs>
                             {backpackVisible ? (
@@ -414,6 +434,7 @@ GUIComponent.propTypes = {
     onClickLogo: PropTypes.func,
     onCloseAccountNav: PropTypes.func,
     onExtensionButtonClick: PropTypes.func,
+    onActivatePythonTab: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
     onRequestCloseBackdropLibrary: PropTypes.func,
